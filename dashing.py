@@ -10,9 +10,8 @@ app = Flask(__name__, static_url_path='/assets', static_folder='public')
 
 # API endpoints
 
-@app.route('/hello')
+@app.route('/api/hello')
 def hello():
-    app.logger.debug('testing')
     return "Hello World!"
 
 # Catch all endpoint serving the index page
