@@ -18,22 +18,29 @@ var dashing;
 (function (angular, dashing) {
     'use strict';
 
-    angular.module('dashing', [])
+    function WidgetTrayDirective() {
 
-        .controller('DashboardController', dashing.DashboardController)
-        .directive('dashboard', dashing.DashboardDirective)
-        .directive('widgetTray', dashing.WidgetTrayDirective)
+        return {
+            restrict: 'E',
+            scope: {},
+            require: '^dashboard',
+            template: '',
+            replace: true,
+            link: function (scope, element, attrs, controller) {
+                console.log('linking widget tray');
 
-        .config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
-            $routeProvider
-                .when('/', {
-                    templateUrl: '/assets/templates/dashboard.tmpl',
-                    controller: 'DashboardController'
-                })
-                .otherwise({redirectTo: '/'});
+                var settingsButton = angular.element('<div class="settings"><div class="menu"></div></div>');
+                element.parent().append(settingsButton);
 
-            $locationProvider.html5Mode(true);
-        }])
-        ;
+                settingsButton.bind('click', function () {
+                    console.log('settings button clicked');
+                });
+            }
+        };
+    }
+
+    dashing.WidgetTrayDirective = [
+        WidgetTrayDirective
+    ];
 
 }(angular, dashing || (dashing = {})));
