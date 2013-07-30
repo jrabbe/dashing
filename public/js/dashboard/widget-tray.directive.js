@@ -24,16 +24,34 @@ var dashing;
             restrict: 'E',
             scope: {},
             require: '^dashboard',
-            template: '',
             replace: true,
+            template: '<div class="tray"></div>',
             link: function (scope, element, attrs, controller) {
                 console.log('linking widget tray');
+                var open = false;
 
-                var settingsButton = angular.element('<div class="settings"><div class="menu"></div></div>');
+                var settingsButton = angular.element('<div class="settings"></div>');
                 element.parent().append(settingsButton);
+
+                var overlay = angular.element('<div class="overlay"></div>');
+                element.parent().append(overlay);
+
+
+                for (var i = 0; i < 10; i++) {
+                    element.append(angular.element('<div class="widget preview"></div>'));
+                }
 
                 settingsButton.bind('click', function () {
                     console.log('settings button clicked');
+                    element.addClass('open');
+                    overlay.addClass('active');
+                    var closeTray = function () {
+                        element.removeClass('open');
+                        overlay.removeClass('active');
+                        overlay.unbind('click', closeTray);
+                    };
+
+                    overlay.bind('click', closeTray);
                 });
             }
         };

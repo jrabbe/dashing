@@ -70,7 +70,7 @@ textarea {
 body {
     min-width: 768px;
 
-    background-color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
 }
 
 .dashing {
@@ -78,23 +78,50 @@ body {
     margin-left: auto;
     margin-right: auto;
     width: 768px;
+    height: 512px;
+
+    -webkit-perspective: 1700px;
+    -moz-perspective: 1700px;
+    perspective: 1700px;
+    -webkit-perspective-origin: 100% 50%;
+    -moz-perspective-origin: 100% 50%;
+    perspective-origin: 100% 50%;
+
 }
 
 .widget {
     position: absolute;
-    margin: 3px;
+    display: block;
+
+    border: 1px solid rgb(51, 51, 51);
+    background-color: rgb(255, 255, 255);
+}
+
+.widget.preview {
+    position: static;
+    display: inline-block;
+
+    background-color: rgb(0, 108, 230);
 
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
 
-    border: 1px solid rgb(51, 51, 51);
-    background-color: rgb(0, 0, 0);
+    width: 64px;
+    height: 64px;
+
+    margin: 4px;
 }
 
 .base {
     width: 58px;
     height: 58px;
+
+    margin: 3px;
+
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
 
     border: 0;
     background-color: rgba(51, 51, 51, 0.5);
@@ -129,6 +156,61 @@ body {
     -ms-transform: scale(1);
     transform: scale(1);
     opacity: 1;
+}
+
+.tray {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    height: 512px;
+    width: 74px;
+
+    z-index: 5;
+
+    overflow: hidden;
+
+    background-color: rgb(51, 51, 51);
+
+    opacity: 0;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform-origin: right 0;
+    -moz-transform-origin: right 0;
+    transform-origin: right 0;
+    -webkit-transform: rotateY(-90deg);
+    -moz-transform: rotateY(-90deg);
+    transform: rotateY(-90deg);
+    -webkit-transition: -webkit-transform 0.4s, opacity 0.1s 0.3s;
+    -moz-transition: -moz-transform 0.4s, opacity 0.1s 0.3s;
+    transition: transform 0.4s, opacity 0.1s 0.3s;
+}
+
+.tray.open {
+    opacity: 1;
+    -webkit-transform: rotateY(0deg);
+    -moz-transform: rotateY(0deg);
+    transform: rotateY(0deg);
+    -webkit-transition: -webkit-transform 0.4s, opacity 0.1s;
+    -moz-transition: -moz-transform 0.4s, opacity 0.1s;
+    transition: transform 0.4s, opacity 0.1s;
+}
+
+.overlay {
+    position: absolute;
+
+    width: 768px;
+    height: 512px;
+    z-index: 4;
+
+    background-color: rgba(51, 51, 51, 0.75);
+
+    display: none;
+}
+
+.overlay.active {
+    display: block;
 }
 
 
