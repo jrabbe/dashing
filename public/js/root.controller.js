@@ -18,10 +18,10 @@ var dashing;
 (function (dashing) {
     'use strict';
 
-    dashing.DashboardController = [
+    dashing.RootController = [
         '$scope',
-        function DashboardController($scope) {
-            $scope.test = 'This is only a test';
+        function ($scope) {
+            // Nothing yet.
         }];
 
 }(dashing || (dashing = {})));

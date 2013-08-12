@@ -21,7 +21,7 @@ var dashing;
     dashing.DashboardDirective = [
         '$document',
         '$timeout',
-        function DashboardDirective($document, $timeout) {
+        function ($document, $timeout) {
 
             return {
                 restrict: 'E',
@@ -29,9 +29,7 @@ var dashing;
                 template: '<div class="dashing container_12" ng-transclude></div>',
                 replace: true,
                 transclude: true,
-                controller: [function () {
-                    console.log('dashboard controller');
-                }],
+                controller: 'DashboardController',
                 link: function (scope, element, attrs) {
                     console.log('linking dashboard');
 
@@ -60,18 +58,14 @@ var dashing;
                     var head = $document.find('head');
                     head.append(style);
 
-                    var content = angular.element('<div class="content"></div>');
-                    element.append(content);
-
                     for (y = 1; y <= 8; y++) {
                         for (x = 1; x <= 12; x++) {
-                            content.append(angular.element('<div class="widget base col' + x + ' row' + y + '"></div>'));
+                            element.append(angular.element('<div class="widget base col' + x + ' row' + y + '"></div>'));
                         }
                     }
 
-                    content.append(angular.element('<div class="widget col3 row4 colspan1 rowspan4"></div>'));
-
-                    element.append('<div class="clearfix"></div>')
+                    // TODO remove, it was just to test
+                    element.append(angular.element('<div class="widget col3 row4 colspan1 rowspan4"><div class="settings-button icon"></div></div>'));
 
                     $timeout(function () {
                         element.addClass('done');

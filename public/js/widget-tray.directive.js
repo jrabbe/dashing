@@ -19,7 +19,8 @@ var dashing;
     'use strict';
 
     dashing.WidgetTrayDirective = [
-        function WidgetTrayDirective() {
+        function () {
+
             return {
                 restrict: 'E',
                 scope: {},
