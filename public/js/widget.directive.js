@@ -34,7 +34,7 @@ var dashing;
                     element.append(settingsButton);
 
                     settingsButton.bind('click', function () {
-                        console.log('settings button clicked');
+                        console.log('widget settings button clicked');
                     });
                 }
             };

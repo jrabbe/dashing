@@ -23,6 +23,43 @@ var dashing;
         '$timeout',
         function ($document, $timeout) {
 
+            var _createDashboardGridStyleElement = function () {
+                var x, y;
+                var styles = '';
+
+                for (x = 0; x < 12; x++) {
+                    styles += '.col' + (x + 1) + ' { left: ' + (64 * x) + 'px; }\n';
+                }
+
+                for (y = 0; y < 8; y++) {
+                    styles += '.row' + (y + 1) + ' { top: ' + (64 * y) + 'px; }\n';
+                }
+
+                styles += '.colspan1 { width: 256px }\n';
+                styles += '.colspan1_5 { width: 384px }\n';
+                styles += '.colspan2 { width: 512px }\n';
+                styles += '.colspan3 { width: 768px }\n';
+
+                for (y = 1; y <= 8; y++) {
+                    styles += '.rowspan' + (y) + ' { height: ' + (64 * y) + 'px; }\n';
+                }
+
+                var styleElement = angular.element('<style type="text/css"></style>');
+                styleElement.text(styles);
+
+                var headElement = $document.find('head');
+                headElement.append(styleElement);
+            }
+
+            var _addDropTargets = function (element) {
+                var x, y;
+                for (y = 1; y <= 8; y++) {
+                    for (x = 1; x <= 12; x++) {
+                        element.append(angular.element('<div class="widget base col' + x + ' row' + y + '"></div>'));
+                    }
+                }
+            }
+
             return {
                 restrict: 'E',
                 scope: {},
@@ -33,40 +70,13 @@ var dashing;
                 link: function (scope, element, attrs) {
                     console.log('linking dashboard');
 
-                    var x, y;
-                    var styles = '';
-
-                    for (x = 0; x < 12; x++) {
-                        styles += '.col' + (x + 1) + ' { left: ' + (64 * x) + 'px; }\n';
-                    }
-
-                    for (y = 0; y < 8; y++) {
-                        styles += '.row' + (y + 1) + ' { top: ' + (64 * y) + 'px; }\n';
-                    }
-
-                    styles += '.colspan1 { width: 256px }\n';
-                    styles += '.colspan1_5 { width: 384px }\n';
-                    styles += '.colspan2 { width: 512px }\n';
-                    styles += '.colspan3 { width: 768px }\n';
-
-                    for (y = 1; y <= 8; y++) {
-                        styles += '.rowspan' + (y) + ' { height: ' + (64 * y) + 'px; }\n';
-                    }
-
-                    var style = angular.element('<style type="text/css"></style>');
-                    style.text(styles);
-                    var head = $document.find('head');
-                    head.append(style);
-
-                    for (y = 1; y <= 8; y++) {
-                        for (x = 1; x <= 12; x++) {
-                            element.append(angular.element('<div class="widget base col' + x + ' row' + y + '"></div>'));
-                        }
-                    }
+                    _createDashboardGridStyleElement();
+                    _addDropTargets(element);
 
                     // TODO remove, it was just to test
                     element.append(angular.element('<div class="widget col3 row4 colspan1 rowspan4"><div class="settings-button icon"></div></div>'));
 
+                    // TODO remove, it was just to test
                     $timeout(function () {
                         element.addClass('done');
                     }, 100);

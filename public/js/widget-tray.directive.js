@@ -31,7 +31,7 @@ var dashing;
                     console.log('linking widget tray');
                     var open = false;
 
-                    var settingsButton = angular.element('<div class="settings"></div>');
+                    var settingsButton = angular.element('<div class="tray-button"></div>');
                     element.parent().append(settingsButton);
 
                     var overlay = angular.element('<div class="overlay"></div>');
