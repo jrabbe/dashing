@@ -1,0 +1,10 @@
+{
+    "name": "Graph",
+    "description": "A plugin for graphing data from different sources.",
+    "icon": "graph.png",
+    "files": {
+        "server": ["graph.py"],
+        "browser": ["graph.js"],
+        "template": ["graph.tmpl"]
+    }
+}
