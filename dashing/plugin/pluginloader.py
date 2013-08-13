@@ -27,5 +27,23 @@ class PluginLoader:
         for pluginDirName in os.listdir(self.pluginDir):
             pluginPath = os.path.join(self.pluginDir, pluginDirName)
             if os.path.isdir(pluginPath) and not pluginDirName in self.plugins:
-                self.plugins[pluginPath] = Plugin(pluginDirName, pluginPath)
+                self.plugins[pluginDirName] = Plugin(pluginDirName, pluginPath)
 
+    def getPlugins(self):
+        result = []
+        for p in self.plugins:
+            result.append(self.plugins[p].getSettings())
+
+        return result
+
+    def getPlugin(self, plugin):
+        if plugin in self.plugins:
+            return self.plugins[plugin].getSettings()
+
+        return None
+
+    def getIcon(self, plugin):
+        if plugin in self.plugins:
+            return self.plugins[plugin].getIcon()
+
+        return None

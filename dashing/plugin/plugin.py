@@ -27,8 +27,6 @@ class Plugin:
         with open(os.path.realpath(os.path.join(path, name + '.json'))) as j:
             self.settings = json.load(j)
 
-        print 'read settings: ', self.settings
-
         if 'icon' in self.settings:
             iconPath = os.path.join(path, self.settings['icon'])
             if not os.path.isfile(iconPath):
@@ -46,4 +44,8 @@ class Plugin:
 
     def getSettings(self):
         return self.settings
+
+    def getIcon(self):
+        with open(self.icon, 'r') as f:
+            return f.read()
 

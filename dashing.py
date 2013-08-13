@@ -19,7 +19,7 @@
 # The main application file for dashing.
 #
 
-from flask import Flask, url_for, render_template, json
+from flask import Flask, url_for, render_template, json, request, make_response
 
 from dashing.settings.config import Config
 from dashing.settings.settings import Settings
@@ -30,13 +30,27 @@ config = Config()
 app = Flask(__name__, static_url_path='/assets', static_folder='public')
 
 settings = Settings(config.getConfig('db'))
-plugins = PluginLoader('plugins')
+availablePlugins = PluginLoader('plugins')
 
 # API endpoints
 
 @app.route('/api/plugins')
 def plugins():
-    return "TBC";
+    name = request.args.get('name', None)
+    icon = request.args.get('icon', False)
+
+    print 'name = ', name
+    print 'icon = ', icon
+
+    if name is None:
+        return json.dumps(availablePlugins.getPlugins())
+    else:
+        if icon == False:
+            return json.dumps(availablePlugins.getPlugin(name))
+        else:
+            resp = make_response(availablePlugins.getIcon(name))
+            resp.headers['Content-Type'] = 'image/png'
+            return resp
 
 @app.route('/api/settings')
 def settings():
