@@ -23,17 +23,18 @@ var dashing;
         .constant('DASHBOARD_SIZE', {width: 12, height: 8})
 
         .controller('DashboardController', dashing.DashboardController)
-        .controller('RootController', dashing.RootController)
 
         .directive('dashboard', dashing.DashboardDirective)
         .directive('widgetTray', dashing.WidgetTrayDirective)
         .directive('widget', dashing.WidgetDirective)
 
+        .service('Plugin', dashing.PluginService)
+
         .config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
             $routeProvider
                 .when('/', {
                     templateUrl: '/assets/templates/dashboard.tmpl',
-                    controller: 'RootController'
+                    controller: 'DashboardController'
                 })
                 .otherwise({redirectTo: '/'});
 

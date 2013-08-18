@@ -36,6 +36,12 @@ availablePlugins = PluginLoader('plugins')
 
 @app.route('/api/plugins')
 def plugins():
+    """Function for getting information about plugins. Invoked through the route /api/plugins.
+    Invoking the route directly with a get request simply retrieves the settings for all icons
+    and returns that as JSON.
+
+    There are two available query parameters, name which is used to retrieve information about a
+    specific plugin, and icon (used together with Name) to retrieve the icon for a specific icon."""
     name = request.args.get('name', None)
     icon = request.args.get('icon', False)
 

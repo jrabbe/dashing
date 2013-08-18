@@ -30,11 +30,7 @@ class PluginLoader:
                 self.plugins[pluginDirName] = Plugin(pluginDirName, pluginPath)
 
     def getPlugins(self):
-        result = []
-        for p in self.plugins:
-            result.append(self.plugins[p].getSettings())
-
-        return result
+        return self.plugins.keys()
 
     def getPlugin(self, plugin):
         if plugin in self.plugins:

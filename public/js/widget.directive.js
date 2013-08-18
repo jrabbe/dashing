@@ -23,18 +23,29 @@ var dashing;
 
             return {
                 restrict: 'E',
-                scope: {},
-                require: '^dashboard',
+                scope: {
+                    icon: '@'
+                },
                 replace: true,
                 transclude: true,
                 template: '<div class="widget" ng-transclude></div>',
-                link: function (scope, element, attrs, controller) {
+                link: function (scope, element, attrs) {
 
-                    var settingsButton = angular.element('<div class="settings-button icon"></div>');
+                    var settingsButton = angular.element('<div class="icon settings-button"></div>');
                     element.append(settingsButton);
 
                     settingsButton.bind('click', function () {
                         console.log('widget settings button clicked');
+                    });
+
+                    scope.$watch('icon', function (value) {
+                        if (!!value && element.hasClass('preview')) {
+                            element.css({
+                                'background-image': 'url(' + value + ')',
+                                'background-repeat': 'no-repeat',
+                                'background-size': '64px 64px'
+                            });
+                        }
                     });
                 }
             };

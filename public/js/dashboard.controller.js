@@ -27,6 +27,8 @@ var dashing;
 
             // Representation of the board as an array where you can find widgets.
             var _board = Array (DASHBOARD_SIZE.width * DASHBOARD_SIZE.height);
+
+            $scope.controller = 'dashboard';
         }];
 
 }(dashing || (dashing = {})));

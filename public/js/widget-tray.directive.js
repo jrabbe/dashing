@@ -18,17 +18,21 @@ var dashing;
 (function (angular, dashing) {
     'use strict';
 
+    /**
+     * The directive for the widget tray. Loads widgets from the Plugin service and shows the
+     * available widgets in the list.
+     */
+
     dashing.WidgetTrayDirective = [
-        function () {
+        'Plugin',
+        function (Plugin) {
 
             return {
                 restrict: 'E',
                 scope: {},
-                require: '^dashboard',
                 replace: true,
                 template: '<div class="tray"></div>',
-                link: function (scope, element, attrs, controller) {
-                    console.log('linking widget tray');
+                link: function (scope, element, attrs) {
                     var open = false;
 
                     var settingsButton = angular.element('<div class="tray-button"></div>');
@@ -37,13 +41,15 @@ var dashing;
                     var overlay = angular.element('<div class="overlay"></div>');
                     element.parent().append(overlay);
 
-
-                    for (var i = 0; i < 10; i++) {
-                        element.append(angular.element('<div class="widget preview"></div>'));
-                    }
+                    Plugin.getPlugins(function (pluginList) {
+                        angular.forEach(pluginList, function (plugin) {
+                            Plugin.createPluginPreview(plugin, scope, function (widget) {
+                                element.append(widget);
+                            });
+                        });
+                    });
 
                     settingsButton.bind('click', function () {
-                        console.log('settings button clicked');
                         element.addClass('open');
                         overlay.addClass('active');
                         var closeTray = function () {

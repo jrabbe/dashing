@@ -62,19 +62,14 @@ var dashing;
 
             return {
                 restrict: 'E',
-                scope: {},
                 template: '<div class="dashing container_12" ng-transclude></div>',
                 replace: true,
                 transclude: true,
-                controller: 'DashboardController',
                 link: function (scope, element, attrs) {
                     console.log('linking dashboard');
 
                     _createDashboardGridStyleElement();
                     _addDropTargets(element);
-
-                    // TODO remove, it was just to test
-                    element.append(angular.element('<div class="widget col3 row4 colspan1 rowspan4"><div class="settings-button icon"></div></div>'));
 
                     // TODO remove, it was just to test
                     $timeout(function () {
