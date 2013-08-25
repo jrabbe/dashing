@@ -25,8 +25,8 @@ var dashing;
         .controller('DashboardController', dashing.DashboardController)
 
         .directive('dashboard', dashing.DashboardDirective)
-        .directive('widgetTray', dashing.WidgetTrayDirective)
         .directive('widget', dashing.WidgetDirective)
+        .directive('widgetTray', dashing.WidgetTrayDirective)
 
         .service('Plugin', dashing.PluginService)
 

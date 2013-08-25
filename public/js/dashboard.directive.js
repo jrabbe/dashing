@@ -52,12 +52,14 @@ var dashing;
             }
 
             var _addDropTargets = function (element) {
+                var grid = angular.element('<div class="grid"></div>')
                 var x, y;
                 for (y = 1; y <= 8; y++) {
                     for (x = 1; x <= 12; x++) {
-                        element.append(angular.element('<div class="widget base col' + x + ' row' + y + '"></div>'));
+                        grid.append(angular.element('<div class="widget base col' + x + ' row' + y + '"></div>'));
                     }
                 }
+                element.append(grid);
             }
 
             return {
@@ -71,9 +73,9 @@ var dashing;
                     _createDashboardGridStyleElement();
                     _addDropTargets(element);
 
-                    // TODO remove, it was just to test
+                    // TODO remove later, it is just for show.
                     $timeout(function () {
-                        element.addClass('done');
+                        element.addClass('is-ready');
                     }, 100);
                 }
             };

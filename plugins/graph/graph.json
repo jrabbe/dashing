@@ -6,5 +6,8 @@
         "server": ["graph.py"],
         "browser": ["graph.js"],
         "template": ["graph.tmpl"]
-    }
+    },
+    "sizes": [
+        {"width": 1.5, "height": 2}
+    ]
 }

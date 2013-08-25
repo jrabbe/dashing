@@ -1,3 +1,14 @@
 {
-    "db": "dashing.db"
+    "db": "dashing.db",
+    "allowed_sizes": {
+        "widths": [1, 1.5, 2, 3],
+        "heights": [1, 2, 3, 4, 5, 6, 7, 8]
+    },
+    "colors": [
+        "#236441",
+        "#308B5A",
+        "#3CB272",
+        "#909090",
+        "#AAAAAA"
+    ]
 }

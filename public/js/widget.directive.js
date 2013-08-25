@@ -24,7 +24,8 @@ var dashing;
             return {
                 restrict: 'E',
                 scope: {
-                    icon: '@'
+                    icon: '@',
+                    preview: '@'
                 },
                 replace: true,
                 transclude: true,
@@ -38,13 +39,15 @@ var dashing;
                         console.log('widget settings button clicked');
                     });
 
-                    scope.$watch('icon', function (value) {
-                        if (!!value && element.hasClass('preview')) {
-                            element.css({
-                                'background-image': 'url(' + value + ')',
-                                'background-repeat': 'no-repeat',
-                                'background-size': '64px 64px'
-                            });
+                    scope.$watch('preview', function (value) {
+                        if (angular.isDefined(value)) {
+                            element.addClass('preview');
+                            if (angular.isString(scope.icon)) {
+                                element.css({'background-image': 'url(' + attrs.icon + ')'});
+                            }
+                        } else {
+                            element.removeClass('preview');
+                            element.css({'background-image': ''});
                         }
                     });
                 }

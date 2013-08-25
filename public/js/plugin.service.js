@@ -29,21 +29,41 @@ var dashing;
         '$http',
         function ($compile, $http) {
 
+            var _plugins = undefined;
+            var _colspan = function (value) {
+                switch(value) {
+                    case 1:
+                        return 'colspan1';
+                    case 1.5:
+                        return 'colspan1_5';
+                    case 2:
+                        return 'colspan2';
+                    case 3:
+                        return 'colspan3';
+                    default:
+                        console.error('unknown column span: ', value);
+                        return 'colspan1';
+                }
+            }
+
             this.getPlugins = function (success) {
                 // use $http to request /api/plugins
                 $http.get('/api/plugins').then(function (response) {
+                    console.log(response);
                     if (angular.isDefined(response.data) && !angular.isDefined(response.data.error)) {
-                        (success || angular.noop)(response.data)
+                        _plugins = response.data;
+                        (success || angular.noop)(_plugins);
                     }
                 });
             };
 
-            this.createPluginPreview = function (plugin, scope, success) {
-                console.log('creating plugin preview for ', plugin);
-                var widget = $compile('<widget class="preview" icon="/api/plugins?name=' + plugin + '&icon"></widget>')(scope);
-                console.log('created preview widget: ', widget);
+            this.createPlugin = function (plugin, preview, scope, success) {
+                var previewAttr = preview && 'preview ' || '';
+                var widget = $compile('<widget ' + previewAttr + 'icon="/api/plugins?name=' +
+                    plugin + '&icon"></widget>')(scope);
+
                 (success || angular.noop)(widget);
-            }
+            };
         }
     ];
 

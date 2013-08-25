@@ -43,23 +43,27 @@ var dashing;
 
                     Plugin.getPlugins(function (pluginList) {
                         angular.forEach(pluginList, function (plugin) {
-                            Plugin.createPluginPreview(plugin, scope, function (widget) {
+                            Plugin.createPlugin(plugin, true, scope, function (widget) {
                                 element.append(widget);
                             });
                         });
                     });
 
-                    settingsButton.bind('click', function () {
-                        element.addClass('open');
-                        overlay.addClass('active');
+                    var openTray = function () {
+                        element.addClass('is-open');
+                        overlay.addClass('is-active');
                         var closeTray = function () {
-                            element.removeClass('open');
-                            overlay.removeClass('active');
+                            element.removeClass('is-open');
+                            overlay.removeClass('is-active');
                             overlay.unbind('click', closeTray);
+                            settingsButton.bind('click', openTray);
                         };
 
                         overlay.bind('click', closeTray);
-                    });
+                        settingsButton.bind('click', closeTray);
+                    };
+
+                    settingsButton.bind('click', openTray);
                 }
             };
         }];
