@@ -41,7 +41,7 @@ var dashing;
                     var overlay = angular.element('<div class="overlay"></div>');
                     element.parent().append(overlay);
 
-                    Plugin.getPlugins(function (pluginList) {
+                    Plugin.getPluginList(function (pluginList) {
                         angular.forEach(pluginList, function (plugin) {
                             Plugin.createPlugin(plugin, true, scope, function (widget) {
                                 element.append(widget);

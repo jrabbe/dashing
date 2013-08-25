@@ -30,39 +30,69 @@ var dashing;
         function ($compile, $http) {
 
             var _plugins = undefined;
-            var _colspan = function (value) {
-                switch(value) {
-                    case 1:
-                        return 'colspan1';
-                    case 1.5:
-                        return 'colspan1_5';
-                    case 2:
-                        return 'colspan2';
-                    case 3:
-                        return 'colspan3';
-                    default:
-                        console.error('unknown column span: ', value);
-                        return 'colspan1';
-                }
+
+            var _attributeString = function (attributes) {
+                var result = [];
+                angular.forEach(attributes, function (value, key) {
+                    result.push(key + '="' + value + '"');
+                });
+
+                return result.join(' ');
             }
 
-            this.getPlugins = function (success) {
-                // use $http to request /api/plugins
-                $http.get('/api/plugins').then(function (response) {
-                    console.log(response);
-                    if (angular.isDefined(response.data) && !angular.isDefined(response.data.error)) {
-                        _plugins = response.data;
-                        (success || angular.noop)(_plugins);
-                    }
-                });
+            var _createElement = function (name, attributes, scope) {
+                var result = '<' + name + ' ' + _attributeString(attributes) + '></' + name + '>';
+                return $compile(result)(scope);
+            };
+
+
+            this.getPluginList = function (success) {
+                if (!angular.isDefined(_plugins)) {
+                    $http.get('/api/plugins').then(function (response) {
+                        if (angular.isDefined(response.data) && !angular.isDefined(response.data.error)) {
+                            _plugins = {}
+                            angular.forEach(response.data, function (value) {
+                                _plugins[value] = undefined;
+                            });
+                            (success || angular.noop)(Object.keys(_plugins));
+                        }
+                    });
+                } else {
+                    (success || angular.noop)(Object.keys(_plugins));
+                }
             };
 
             this.createPlugin = function (plugin, preview, scope, success) {
-                var previewAttr = preview && 'preview ' || '';
-                var widget = $compile('<widget ' + previewAttr + 'icon="/api/plugins?name=' +
-                    plugin + '&icon"></widget>')(scope);
+                var createPlugin = function (hasPreview, sizes) {
+                    var attributes = {};
+                    if (hasPreview) {
+                        attributes.preview = '';
+                        attributes.icon = '/api/plugins?name=' + plugin + '&icon';
+                    } else {
+                        // something else;
+                        if (angular.isArray(sizes) && sizes.length > 0) {
+                            attributes.width = sizes[0].width;
+                            attributes.height = sizes[0].height;
+                        }
+                    }
 
-                (success || angular.noop)(widget);
+                    var widget = _createElement('widget', attributes, scope);
+
+                    (success || angular.noop)(widget);
+                }
+
+                if (angular.isDefined(_plugins) && _plugins.hasOwnProperty(plugin)) {
+                    if (angular.isDefined(_plugins[plugin])) {
+                        createPlugin(preview, _plugins[plugin].sizes);
+                    } else {
+                        $http.get('/api/plugins', {params: {name: plugin}}).then(function (response) {
+                            _plugins[plugin] = response.data;
+                            createPlugin(preview, _plugins[plugin].sizes);
+                        });
+                    }
+                } else {
+                    console.error('Trying to create plugin ' + plugin + ' which does not exist.');
+                }
             };
         }
     ];

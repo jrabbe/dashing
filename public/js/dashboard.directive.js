@@ -21,7 +21,8 @@ var dashing;
     dashing.DashboardDirective = [
         '$document',
         '$timeout',
-        function ($document, $timeout) {
+        'Plugin',
+        function ($document, $timeout, Plugin) {
 
             var _createDashboardGridStyleElement = function () {
                 var x, y;
