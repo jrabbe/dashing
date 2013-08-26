@@ -6,6 +6,26 @@ are included to help get started, and new plugins can be created as described in
 Development* section below. New plugins can be installed simply by dropping them into the `plugins`
 folder.
 
+Dependencies
+------------
+
+This web application simply depends on the *flask* python module. I would suggest creating a virtual
+environment for installing into. Make sure you have `virtualenv` installed, and run.
+
+    virtualenv dashing-env
+    . dashing-env/bin/activate
+
+After activating the environment simply run pip like normal.
+
+    pip install flask
+
+Now you can run the app using
+
+    python dashing.py
+
+Each time you want to run the app, you just activate the virtual environment, and start the
+dashing.py script again.
+
 Configuration
 -------------
 
