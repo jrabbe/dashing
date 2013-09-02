@@ -18,7 +18,7 @@
 # The main application file for dashing.
 #
 
-from flask import Flask, url_for, render_template, json, request, make_response
+from flask import Flask, json, request, make_response
 
 from dashing.settings.config import Config
 from dashing.settings.settings import Settings
@@ -67,8 +67,6 @@ def settings():
 @app.route('/<path:path>')
 def index(path):
     return app.send_static_file('index.html')
-    # return render_template(url_for("static", filename="index.html"))
-#     return static_file('index.html', root='public')
 
 if __name__ == "__main__":
     app.run(debug=True)
